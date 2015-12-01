@@ -9,22 +9,22 @@ from openpyxl.utils import get_column_letter
 
 
 def get_files():
+    # open the workbook
     wb = openpyxl.load_workbook('example.xlsx', read_only=True)
     print("Available Sheets")
-
+    # print sheets
     sheets = wb.get_sheet_names()
     print(sheets)
-
+    # choose a sheet
     sheet_by_name = input("Which sheet would you like to work with: ")
-
+    # if chosen sheet is in the workbook then do the following
     if sheet_by_name in sheets:
+        # set the sheet
         sheet = wb.get_sheet_by_name(sheet_by_name)
-
-
-
+        # this will print the first row.
         for i in range(1, 4, 1):
             print(sheet.cell(row=1, column=i).value, end=' ')
-
+    # set the sheet again
     sheet = wb.get_sheet_by_name(sheet_by_name)
 
     # get total number of rows and columns
@@ -41,18 +41,13 @@ def get_files():
 
     # convert to strings for args
     start = 'A1'  # constant
-    end = str(max_let_col + str(cols))
+    end = str(max_let_col + str(rows))
 
-    # print values
+    # print values/entire table
     for rowOfCellObjects in sheet[start:end]:
         for cellObj in rowOfCellObjects:
             print(cellObj.coordinate, cellObj.value)
         print('----End of row----')
-"""
-# accept a worksheet
-def search_cells(work_sheet):
-    for cellObj in work_sheet[]:
-"""
 
 if __name__ == "__main__":
     get_files()
