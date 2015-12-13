@@ -16,38 +16,57 @@ def get_files():
     sheets = wb.get_sheet_names()
     print(sheets)
     # choose a sheet
-    sheet_by_name = input("Which sheet would you like to work with: ")
+    # input("Which sheet would you like to work with: ")
+
+    search_val = input("So what are you looking for? ")
+
+    sheet_by_name = "Sheet2"
     # if chosen sheet is in the workbook then do the following
     if sheet_by_name in sheets:
         # set the sheet
         sheet = wb.get_sheet_by_name(sheet_by_name)
         # this will print the first row.
-        for i in range(1, 4, 1):
-            print(sheet.cell(row=1, column=i).value, end=' ')
-    # set the sheet again
-    sheet = wb.get_sheet_by_name(sheet_by_name)
+        for i in range(1, 7):
+            for j in range(1, 8, 1):
+                # print(sheet.cell(row=i, column=j).value)
+                cell_val = sheet.cell(row=j, column=i).value
+                if search_val == cell_val:
+                    print("Category: ", sheet.cell(row=1, column=i).value)
+                    print("[ Found at row:", j, "col:", i, "]")
+                    # print entire row
+                    col = sheet.max_column + 1
+                    for rVAl in range(j, col):
+                        print("Name: ", sheet.cell(row=1, column=rVAl).value)
+                        print(str(sheet.cell(row=j, column=rVAl).value))
 
-    # get total number of rows and columns
-    rows = sheet.max_row
-    cols = sheet.max_column
+                        askUser = input("Continue? (y/n): ")
 
-    # get max letters
-    # max_let_row = get_column_letter(sheet.max_row)
-    max_let_col = get_column_letter(sheet.max_column)
+    # # set the sheet again
+    # sheet = wb.get_sheet_by_name(sheet_by_name)
+    #
+    # # get total number of rows and columns
+    # rows = sheet.max_row
+    # cols = sheet.max_column
+    #
+    # # get max letters
+    # # max_let_row = get_column_letter(sheet.max_row)
+    # max_let_col = get_column_letter(sheet.max_column)
+    #
+    # # print results
+    # print("\nIn sheet: ", sheet_by_name, " There are: ", rows,
+    #       " rows and ", cols, " cols", sep='')
+    #
+    # # convert to strings for args
+    # start = 'A1'  # constant
+    # end = str(max_let_col + str(rows))
+    #
+    # # print values/entire table
+    # for rowOfCellObjects in sheet[start:end]:
+    #     for cellObj in rowOfCellObjects:
+    #         print(cellObj.coordinate, cellObj.value)
+    #     print('----End of row----')
 
-    # print results
-    print("\nIn sheet: ", sheet_by_name, " There are: ", rows,
-          " rows and ", cols, " cols", sep='')
 
-    # convert to strings for args
-    start = 'A1'  # constant
-    end = str(max_let_col + str(rows))
-
-    # print values/entire table
-    for rowOfCellObjects in sheet[start:end]:
-        for cellObj in rowOfCellObjects:
-            print(cellObj.coordinate, cellObj.value)
-        print('----End of row----')
 
 if __name__ == "__main__":
     get_files()
