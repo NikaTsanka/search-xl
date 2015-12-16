@@ -1,15 +1,19 @@
-"""
-Open and read the cells of an Excel document with the openpyxl module.
-Calculate all the tract and population data and store it in a data structure.
-Write the data structure to a text file with the .py extension using the pprint module.
-"""
-
 import sys
 import openpyxl
 from openpyxl.utils import get_column_letter
 
+__author__ = 'Nika Tsanakshvili'
+__email__ = "nikatsanka@gmail.com"
+__version__ = "1.1"
+__copyright__ = "Copyright (C) 2015 Nika Tsankashvili"
+__license__ = "Public Domain"
 
-def get_files():
+# Search Range
+START_COL = 1
+END_COL = 7
+
+
+def search_xl():
     # open the workbook
     # Before assignments
     global start_row, wb
@@ -63,12 +67,13 @@ def get_files():
 
             # start looking for search value
             # 1 to 7 columns that's first 1
-            for i in range(1, 7):
+            for i in range(START_COL, END_COL):
                 # start_row to max_row. STEP 1
                 for j in range(start_row, max_row, 1):
                     # check for search value
                     if search_val == sheet.cell(row=j, column=i).value:
                         print("[ Found at row:", j, "column:", get_column_letter(i), "]")
+                        #print(sheet.cell(row=j, column=i).coordinate)
                         count_res += 1
 
             print("Total number of \'", search_val, "\' found: ", count_res, sep='')
@@ -80,9 +85,14 @@ def get_files():
                 # print sheets
                 sheets = wb.get_sheet_names()
                 print(sheets)
-            # else it will ask the user to enter the sheet name again.
+                # else it will ask the user to enter the sheet name again.
         else:
             print("\'", sheet_by_name, "\' is not in the workbook.", sep='')
 
+
 if __name__ == "__main__":
-    get_files()
+    if sys.version_info > (3, 4):
+        search_xl()
+    else:
+        print("This software requires Python 3.4 or higher to run." +
+              "\nYou can download the latest version of Python from: https://www.python.org/")
