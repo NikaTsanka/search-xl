@@ -4,13 +4,23 @@ Calculate all the tract and population data and store it in a data structure.
 Write the data structure to a text file with the .py extension using the pprint module.
 """
 
-import openpyxl, pprint
+import sys
+import openpyxl
 from openpyxl.utils import get_column_letter
 
 
 def get_files():
     # open the workbook
-    workbook = input("Please enter name of the workbook: ")
+    # Before assignments
+    global start_row, wb
+
+    # if length of the argv is more than 1 then the argument is passed.
+    if len(sys.argv) > 1:
+        # path should be at 1 because .py is at 0
+        workbook = sys.argv[1]
+    else:
+        workbook = input("Please enter name of the workbook: ")
+
     input_val = True
     while input_val:
         try:
@@ -24,52 +34,55 @@ def get_files():
     # print sheets
     sheets = wb.get_sheet_names()
     print(sheets)
+    # get the search value.
+    search_val = input("What are you looking for? ")
+    # ask usr for more sheets.
+    user_ = True
+    # keep checking sheets
+    while user_:
+        # get working sheet.
+        sheet_by_name = input("Which sheet would you like to work with: ")
+        # if chosen sheet is in the workbook then do the following
+        if sheet_by_name in sheets:
+            # set the sheet
+            sheet = wb.get_sheet_by_name(sheet_by_name)
 
-    search_val = input("So what are you looking for? ")
+            # get maximum number of rows in a sheet.
+            max_row = sheet.max_row
 
-    sheet_by_name = input("Which sheet would you like to work with: ")
-    # if chosen sheet is in the workbook then do the following
-    if sheet_by_name in sheets:
-        # set the sheet
-        sheet = wb.get_sheet_by_name(sheet_by_name)
-        # this will print the first row.
-        for i in range(1, 7):
-            for j in range(1, 8, 1):
-                # print(sheet.cell(row=i, column=j).value)
-                cell_val = sheet.cell(row=j, column=i).value
-                if search_val == cell_val:
-                    print("Category: ", sheet.cell(row=1, column=i).value)
-                    print("[ Found at row:", j, "col:", i, "]")
-                    # print entire row
-                    col = sheet.max_column + 1
-                    for rVAl in range(j, col):
-                        print("Name: ", sheet.cell(row=1, column=rVAl).value)
-                        print(str(sheet.cell(row=j, column=rVAl).value))
+            # find the starting point
+            # start looking for # sign in the first column
+            for k in sheet.columns[0]:
+                # start checking
+                cell_val = k.value
+                if cell_val == '#':
+                    start_row = k.row
+                    break
+            # save number of results
+            count_res = 0
 
-    # # set the sheet again
-    # sheet = wb.get_sheet_by_name(sheet_by_name)
-    #
-    # # get total number of rows and columns
-    # rows = sheet.max_row
-    # cols = sheet.max_column
-    #
-    # # get max letters
-    # # max_let_row = get_column_letter(sheet.max_row)
-    # max_let_col = get_column_letter(sheet.max_column)
-    #
-    # # print results
-    # print("\nIn sheet: ", sheet_by_name, " There are: ", rows,
-    #       " rows and ", cols, " cols", sep='')
-    #
-    # # convert to strings for args
-    # start = 'A1'  # constant
-    # end = str(max_let_col + str(rows))
-    #
-    # # print values/entire table
-    # for rowOfCellObjects in sheet[start:end]:
-    #     for cellObj in rowOfCellObjects:
-    #         print(cellObj.coordinate, cellObj.value)
-    #     print('----End of row----')
+            # start looking for search value
+            # 1 to 7 columns that's first 1
+            for i in range(1, 7):
+                # start_row to max_row. STEP 1
+                for j in range(start_row, max_row, 1):
+                    # check for search value
+                    if search_val == sheet.cell(row=j, column=i).value:
+                        print("[ Found at row:", j, "column:", get_column_letter(i), "]")
+                        count_res += 1
+
+            print("Total number of \'", search_val, "\' found: ", count_res, sep='')
+            ans = input("Would you like to search another sheet? (Y/n): ")
+            if ans == 'N' or ans == 'n':
+                user_ = False
+            else:
+                print("Available Sheets")
+                # print sheets
+                sheets = wb.get_sheet_names()
+                print(sheets)
+            # else it will ask the user to enter the sheet name again.
+        else:
+            print("\'", sheet_by_name, "\' is not in the workbook.", sep='')
 
 if __name__ == "__main__":
     get_files()
