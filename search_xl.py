@@ -11,7 +11,7 @@ __version__ = "1.3"
 __copyright__ = "Copyright (C) 2015 Nika Tsankashvili"
 __license__ = "Public Domain"
 
-# Search Range
+# Search Range for keys
 START_COL = 1
 END_COL = 7
 
