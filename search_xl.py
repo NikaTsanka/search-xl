@@ -58,7 +58,7 @@ def search_xl():
         user_ = True
         while user_:
             # get working sheet.
-            sheet_by_name = input("Which sheet would you like to search: ")
+            sheet_by_name = input("Sheet to search: ")
             # if chosen sheet is in the workbook then do the following
             if sheet_by_name in sheets:
                 # set the sheet
@@ -76,6 +76,9 @@ def search_xl():
                     if cell_val == '#':
                         start_row = k.row
                         break
+                # say
+                print("Searching...")
+
                 # save number of results
                 count_res = 0
 
