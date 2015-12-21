@@ -40,13 +40,13 @@ def search_xl():
             print("Specified workbook cannot be located.")
             workbook = input("Please enter name of the workbook: ")
 
+    # get the search value.
+    search_val = input("Search bacteria: ")
+
     print("Available Sheets")
     # print sheets
     sheets = wb.get_sheet_names()
     print(sheets)
-
-    # get the search value.
-    search_val = input("What are you looking for? ")
 
     # find home directory / desktop.
     desktop_dir = os.path.join(os.path.expanduser('~'), 'Desktop')
@@ -59,7 +59,7 @@ def search_xl():
         user_ = True
         while user_:
             # get working sheet.
-            sheet_by_name = input("Which sheet would you like to work with: ")
+            sheet_by_name = input("Which sheet would you like to search: ")
             # if chosen sheet is in the workbook then do the following
             if sheet_by_name in sheets:
                 # set the sheet
