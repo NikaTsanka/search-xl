@@ -50,8 +50,10 @@ def search_xl():
     # find home directory / desktop.
     desktop_dir = os.path.join(os.path.expanduser('~'), 'Desktop')
 
+    workbook_name = os.path.basename(workbook)
+
     # create an output file
-    output_file = os.path.join(desktop_dir, search_val + "-Results-From-" + workbook + ".txt")
+    output_file = os.path.join(desktop_dir, search_val + "-Results-From-" + workbook_name + ".txt")
 
     with open(output_file, 'w') as output:
         # keep checking sheets
