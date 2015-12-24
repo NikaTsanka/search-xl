@@ -1,4 +1,4 @@
-## Search Excel
+# Search Excel
 Search Excel is a small Python script that can search structured Excel spreadsheets. It uses Python third-party module “Openpyxl”
 
 ## Supported Platforms:
