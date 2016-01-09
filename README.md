@@ -68,3 +68,7 @@ Output file structure:
 
 ## Contrubutors:
 + Jessica Joyner: [Github](https://github.com/jjoyner07)
+
+## License:
+This is free and unencumbered software released into the public domain.
+Anyone is free to copy, modify, use, or distribute this software, in source code form for any purpose, commercial or non-commercial, and by any means.
